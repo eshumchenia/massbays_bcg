@@ -1,0 +1,10 @@
+Indicator,Metric,Source
+% shoreline hardened,Linear kilometer of hardened shoreline divided by the sum of shoreline that was and that could be hardened,NOAA Environmental Sensitivity Index
+% high intensity land use,"Acres high intensity land use (residential, commercial, industrial, agricultural, and transportation) divided by the total acres in the embayment",MassGIS
+Annual stormwater discharge,Acre-ft stormwater / acres open water / year ,MassGIS/ USDA
+Persons per acre,Number of people divided by the total acres in the embayment ,US Census Bureau
+% using septic systems,Number of people using septic divided by the total population ,"MassBays, US Census Bureau"
+Septic system use,Number of people using septic systems divided by embayment land acreage ,"MassBays, US Census Bureau"
+% impairments for nutrients,Acres of impaired water divided by the acres of open water ,MADEP 2010 305(b) list
+% impairments for bacteria,Acres of impaired water divided by the acres of open water ,MADEP 2010 305(b) list
+% restricted saltmarsh,Acres of salt marsh that are tidally restricted divided by the total acres of salt marsh ,Umass Amherst

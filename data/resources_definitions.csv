@@ -1,0 +1,5 @@
+Indicator,Metric,Source
+% realized saltmarsh,Linear kilometers of shoreline with salt marsh present divided by linear kilometers of shoreline with the potential to be salt marsh ,"MassGIS, CZM MORIS"
+saltmarsh acres/km shoreline,Acres of salt marsh present in an embayment divided by the linear kilometers of shoreline with salt marsh present ,MassGIS
+% realized tidal flats,Acres of tidal flat divided by the acres of open water that are less than 5 meters in depth ,MassGIS
+% realized seagrass,Acres of seagrass divided by the acres of open water that are less than 10 meters in depth ,MADEP/MassGIS
