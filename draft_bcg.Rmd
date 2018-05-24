@@ -27,6 +27,9 @@ d$Cluster <- factor(d$Cluster)
 ## a rescale 0-1 function
 rescale <- function(x) (x-min(x))/(max(x) - min(x)) 
 
+## define the colors for each cluster as used in the Northeastern report
+colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
+
 ```
 
 ## Embayment clusters
@@ -130,7 +133,7 @@ grid.arrange(h1, h2, h3, h4, h5, h6, h7, h8, h9, nrow=3)
 
 ## Save the resulting 9x9 plot
 stressors_hists <- arrangeGrob(h1, h2, h3, h4, h5, h6, h7, h8, h9, nrow=3)
-ggsave(file="stressors_hists.pdf", stressors_hists)
+ggsave(file="stressors_hists.png", stressors_hists)
 
 ```
 
@@ -146,63 +149,63 @@ stressor in each embayment cluster 1 - 4.
 
 b1 <- ggplot(d, aes(x=Cluster, y=hard.of.hard, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% shoreline hardened")
 
 b2 <- ggplot(d, aes(x=Cluster, y=high.intensity, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% high intensity land use")
 
 b3 <- ggplot(d, aes(x=Cluster, y=StormwaterSTD, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="Annual stormwater discharge")
 
 b4 <- ggplot(d, aes(x=Cluster, y=pop.density, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="Persons per acre")
 
 b5 <- ggplot(d, aes(x=Cluster, y=percent.septic, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% using septic systems")
 
 b6 <- ggplot(d, aes(x=Cluster, y=septic.acre, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="Septic system use")
 
 b7 <- ggplot(d, aes(x=Cluster, y=nutrient, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% impairments for nutrients")
 
 b8 <- ggplot(d, aes(x=Cluster, y=bacteria, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% impairments for bacteria")
 
 b9 <- ggplot(d, aes(x=Cluster, y=tidal.restrict, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% restricted saltmarsh")
@@ -212,7 +215,7 @@ grid.arrange(b1, b2, b3, b4, b5, b6, b7, b8, b9, nrow=3)
 
 ## Save the resulting 9x9 plot
 stressors_boxes <- arrangeGrob(b1, b2, b3, b4, b5, b6, b7, b8, b9, nrow=3)
-ggsave(file="stressors_boxes.pdf", stressors_boxes)
+ggsave(file="stressors_boxes.png", stressors_boxes)
 
 ```
 
@@ -275,7 +278,7 @@ grid.arrange(hA, hB, hC, hD, nrow=2)
 
 ## Save the resulting 2x2 plot
 resources_hists <- arrangeGrob(hA, hB, hC, hD, nrow=2)
-ggsave(file="resources_hists.pdf", resources_hists)
+ggsave(file="resources_hists.png", resources_hists)
 
 ```
 
@@ -290,28 +293,28 @@ Now we can also look at the amount of each habitat in each embayment cluster 1 -
 
 bA <- ggplot(d, aes(x=Cluster, y=percent.sm, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% realized saltmarsh")
 
 bB <- ggplot(d, aes(x=Cluster, y=smacres.km, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="saltmarsh acres/km shoreline")
 
 bC <- ggplot(d, aes(x=Cluster, y=tidalflat.openwater, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% realized tidal flats")
 
 bD <- ggplot(d, aes(x=Cluster, y=seagrass, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
   labs(title="% realized seagrass")
@@ -322,7 +325,7 @@ grid.arrange(bA, bB, bC, bD, nrow=2)
 
 ## Save the resulting 2x2 plot
 resources_boxes <- arrangeGrob(bA, bB, bC, bD, nrow=2)
-ggsave(file="resources_boxes.pdf", resources_boxes)
+ggsave(file="resources_boxes.png", resources_boxes)
 
 ```
 
@@ -354,13 +357,13 @@ rescale_d <-mutate(rescale_d, GSA = hard.of.hard + high.intensity
 ## Plot of value of GSA in each cluster
 bGSA <- ggplot(rescale_d, aes(x=Cluster, y=GSA, fill=Cluster)) + 
   geom_boxplot() +
-  scale_fill_brewer(palette="Set1") + theme_minimal() +
+  scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none") +
   labs(title="Generalized Stress Axis Value")
 bGSA
 
 ## Save the resulting plot
-ggsave(file="GSA_boxplot.pdf", bGSA)
+ggsave(file="GSA_boxplot.png", bGSA)
 
 ```
 
@@ -393,14 +396,14 @@ massbaysBCG_melt <- melt(massbaysBCG_data, id = c("d.Embayment", "d.Cluster",
 massbaysBCG <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, shape = 
               variable)) + geom_point(aes(color = factor(d.Cluster))) 
 
-massbaysBCG <- massbaysBCG + scale_color_brewer(palette="Set1") + ggtitle("MassBays draft BCG") + 
+massbaysBCG <- massbaysBCG + scale_color_manual(values=colors) + ggtitle("MassBays draft BCG") + 
   xlab("Generalized Stress Axis") + ylab("Habitat metrics condition") +
   labs(color = "Embayment Cluster", shape = "Habitat metric")
 
 massbaysBCG
 
 ## Save the resulting plot
-ggsave(file="draft_massbaysBCG.pdf", massbaysBCG)
+ggsave(file="draft_massbaysBCG.png", massbaysBCG)
 
 ```
 
@@ -426,13 +429,13 @@ habitatBCGs <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, color = d.Clus
               variable)) + geom_point() +
               xlab("Generalized Stress Axis") +
               ylab("Habitat metrics condition") + 
-              scale_color_brewer(palette = "Set1") + 
+              scale_color_manual(values=colors) + 
               labs(color = "Embayment Cluster") + scale_shape(guide = 'none') +
               facet_wrap(~ variable)
 habitatBCGs
 
 ## Save the plot
-ggsave(file="draft_habitatBCGs.pdf", habitatBCGs)
+ggsave(file="draft_habitatBCGs.png", habitatBCGs)
 
 ```
 
@@ -453,14 +456,14 @@ embaymentBCGs <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, color = d.Cl
           variable)) + geom_point() +
           xlab("Generalized Stress Axis") +
           ylab("Habitat metrics condition") + 
-          scale_color_brewer(palette = "Set1", guide = "none") + 
+          scale_color_manual(values=colors, guide = "none") + 
           labs(shape = "Habitat metric") +
           facet_wrap(~ d.Cluster)
 
 embaymentBCGs
 
 ## Save the plot
-ggsave(file="draft_embaymentBCGs.pdf", embaymentBCGs)
+ggsave(file="draft_embaymentBCGs.png", embaymentBCGs)
 
 ```
 
