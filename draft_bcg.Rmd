@@ -252,13 +252,13 @@ hA <- ggplot(d, aes(x=percent.sm)) + geom_histogram(binwidth=5) +
   theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
-  labs(title="% realized saltmarsh")
+  labs(title="saltmarsh shoreline")
 
 hB <- ggplot(d, aes(x=smacres.km)) + geom_histogram(binwidth=5) +
   theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
-  labs(title="saltmarsh acres/km shoreline")
+  labs(title="saltmarsh extent")
 
 hC <- ggplot(d, aes(x=tidalflat.openwater)) + geom_histogram() +
   theme_minimal() +
@@ -296,14 +296,14 @@ bA <- ggplot(d, aes(x=Cluster, y=percent.sm, fill=Cluster)) +
   scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
-  labs(title="% realized saltmarsh")
+  labs(title="saltmarsh shoreline")
 
 bB <- ggplot(d, aes(x=Cluster, y=smacres.km, fill=Cluster)) + 
   geom_boxplot() +
   scale_fill_manual(values=colors) + theme_minimal() +
   theme(legend.position="none", axis.title.x = element_blank(), axis.title.y = 
           element_blank(), plot.title = element_text(size = 10)) +
-  labs(title="saltmarsh acres/km shoreline")
+  labs(title="saltmarsh extent")
 
 bC <- ggplot(d, aes(x=Cluster, y=tidalflat.openwater, fill=Cluster)) + 
   geom_boxplot() +
