@@ -1,7 +1,8 @@
 ---
-title: "MassBays: Initial data exploration"
+title: "Applying the Estuarine Biological Condition Gradient (BCG) framework 
+to MassBays data and analyses"
 author: "emily shumchenia"
-date: "4/30/2018"
+date: "5/31/2018"
 output: html_document
 ---
 
@@ -35,7 +36,13 @@ colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
 ## Embayment clusters
 There are 4 clusters of embayments in MassBays, defined by the Northeastern 
 assessment. Below they are described by which stressor and habitat metrics were 
-highest.  
+highest in each.  
+
+<div style="float: left; padding: 10px">
+
+<img src="data/clusters_map.png", width="45%"> 
+
+</div>
 
 **Cluster 1**  
 - highest saltmarsh extent  
@@ -53,6 +60,7 @@ highest.
 - highest high-intensity land use  
 - highest population density  
 - highest tidal restriction  
+
 
 ## Stressor Data
 Nine stressors variables were incorporated into the Northeastern assessment.  
@@ -133,7 +141,7 @@ grid.arrange(h1, h2, h3, h4, h5, h6, h7, h8, h9, nrow=3)
 
 ## Save the resulting 9x9 plot
 stressors_hists <- arrangeGrob(h1, h2, h3, h4, h5, h6, h7, h8, h9, nrow=3)
-ggsave(file="draft_figs/stressors_hists.png", stressors_hists)
+ggsave(file="as_presented_figs/stressors_hists.png", stressors_hists)
 
 ```
 
@@ -215,7 +223,7 @@ grid.arrange(b1, b2, b3, b4, b5, b6, b7, b8, b9, nrow=3)
 
 ## Save the resulting 9x9 plot
 stressors_boxes <- arrangeGrob(b1, b2, b3, b4, b5, b6, b7, b8, b9, nrow=3)
-ggsave(file="draft_figs/stressors_boxes.png", stressors_boxes)
+ggsave(file="as_presented_figs/stressors_boxes.png", stressors_boxes)
 
 ```
 
@@ -278,7 +286,7 @@ grid.arrange(hA, hB, hC, hD, nrow=2)
 
 ## Save the resulting 2x2 plot
 resources_hists <- arrangeGrob(hA, hB, hC, hD, nrow=2)
-ggsave(file="draft_figs/resources_hists.png", resources_hists)
+ggsave(file="as_presented_figs/resources_hists.png", resources_hists)
 
 ```
 
@@ -325,7 +333,7 @@ grid.arrange(bA, bB, bC, bD, nrow=2)
 
 ## Save the resulting 2x2 plot
 resources_boxes <- arrangeGrob(bA, bB, bC, bD, nrow=2)
-ggsave(file="draft_figs/resources_boxes.png", resources_boxes)
+ggsave(file="as_presented_figs/resources_boxes.png", resources_boxes)
 
 ```
 
@@ -363,23 +371,26 @@ bGSA <- ggplot(rescale_d, aes(x=Cluster, y=GSA, fill=Cluster)) +
 bGSA
 
 ## Save the resulting plot
-ggsave(file="draft_figs/GSA_boxplot.png", bGSA)
+ggsave(file="as_presented_figs/GSA_boxplot.png", bGSA)
 
 ## Flip and save the plot with the GSA on the x axis
 bGSA_flip <- bGSA + coord_flip()
 
-ggsave(file="draft_figs/GSA_boxplot_flip.png", bGSA_flip)
+ggsave(file="as_presented_figs/GSA_boxplot_flip.png", bGSA_flip)
 
 ```
 
-### Assembling a draft "BCG-like" plot for all of MassBays
-Now we want to plot the values of the habitat metrics in each MassBays embayment
-against the GSA. The resulting plot is very busy because there are 42 embayments 
-and 4 habitat metrics in each. But, this plot could be viewed as "BCG-like". The 
-y-axis is not broken up by BCG levels, but breaks between levels and definitions 
-of levels could be defined.
+### Individual "BCG-like" plots for each embayment type
+Now we want to plot the values of the habitat metrics against the GSA for each 
+MassBays embayment cluster separately. Doing so creates individual "BCG-like" 
+plots for each cluster. Embayment clusters are plotted below and numbered 1-4. 
+We can clearly see that the ranges of stressors and habitats differs among 
+clusters. For example, Cluster 1 seems to be comprised of embayments with low 
+exposure to stressors (the GSA is never greater than 3). On the other hand, 
+despite high levels of exposure to stressors (the GSA is never less than about 
+2.5), Cluster 4 shows relatively high values for percent saltmarsh habitat.  
 
-```{r massbaysBCG, echo = FALSE, message = FALSE}
+```{r embayments, echo = FALSE, message = FALSE}
 
 ## Make a dataframe with the GSA and habitat metrics only
 massbaysBCG_data <- data.frame(d$Embayment, d$Cluster, rescale_d$GSA, 
@@ -398,34 +409,29 @@ massbaysBCG_data <- dplyr::rename(massbaysBCG_data,
 massbaysBCG_melt <- melt(massbaysBCG_data, id = c("d.Embayment", "d.Cluster", 
                                                   "rescale_d.GSA"))
 
-massbaysBCG <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, shape = 
-              variable)) + geom_point(aes(color = factor(d.Cluster))) 
+## Make a "BCG-like" plot for each Embayment cluster individually
+embaymentBCGs <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, color = d.Cluster, shape = 
+          variable)) + geom_point() +
+          xlab("Generalized Stress Axis") +
+          ylab("Habitat metrics condition") + 
+          scale_color_manual(values=colors, guide = "none") + 
+          labs(shape = "Habitat metric") +
+          facet_wrap(~ d.Cluster)
 
-massbaysBCG <- massbaysBCG + scale_color_manual(values=colors) + ggtitle("MassBays draft BCG") + 
-  xlab("Generalized Stress Axis") + ylab("Habitat metrics condition") +
-  labs(color = "Embayment Cluster", shape = "Habitat metric")
+embaymentBCGs
 
-massbaysBCG
-
-## Save the resulting plot
-ggsave(file="draft_figs/draft_massbaysBCG.png", massbaysBCG)
+## Save the plot
+ggsave(file="as_presented_figs/draft_embaymentBCGs.png", embaymentBCGs)
 
 ```
 
-The plot can be simplified a number of ways. For example, each quadrant of the
-BCG represents a unique combination of stressor and habitat characteristics.  
-
-<p align="center">
-<img src="draft_figs/massbaysBCG_sections.png", width=50%></a> 
-</p>
-
 ### Individual "BCG-like" plots of each habitat type
-Another way to simplify is to look at a "BCG-like" plot for each habitat type 
-separately. Again, the y-axis does not have BCG levels, but these could be 
-developed.  
+To get a clearer idea for whether or not there are linear (or any) relationships 
+between individual habitat metrics and the GSA, we can plot each of the habitats 
+separately against the GSA, for all MassBays embayments. Again, the y-axis does 
+not have BCG levels, but these could be developed.  
 
-We can see that Saltmarsh acres per km shoreline has the most linear
-relationship with the GSA.
+We can see that Saltmarsh extent has the most linear relationship with the GSA.
 
 ```{r habitats, echo = FALSE, message = FALSE}
 
@@ -440,37 +446,10 @@ habitatBCGs <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, color = d.Clus
 habitatBCGs
 
 ## Save the plot
-ggsave(file="draft_figs/draft_habitatBCGs.png", habitatBCGs)
+ggsave(file="as_presented_figs/draft_habitatBCGs.png", habitatBCGs)
 
 ```
 
-
-### Individual "BCG-like" plots for each embayment type
-More likely, we would want to look at a BCG-like plot of each embayment cluster 
-separately. They are plotted below and numbered 1-4. We can clearly see that the 
-ranges of stressors and habitats differs among clusters. For example, Cluster 1 
-seems to be comprised of embayments with low exposure to stressors (the GSA is 
-never greater than 3). On the other hand, despite high levels of exposure to 
-stressors (the GSA is never less than about 2.5), Cluster 4 shows relatively 
-high values for percent saltmarsh habitat.  
-
-```{r embayments, echo = FALSE, message = FALSE}
-
-## Make a "BCG-like" plot for each Embayment cluster individually
-embaymentBCGs <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, color = d.Cluster, shape = 
-          variable)) + geom_point() +
-          xlab("Generalized Stress Axis") +
-          ylab("Habitat metrics condition") + 
-          scale_color_manual(values=colors, guide = "none") + 
-          labs(shape = "Habitat metric") +
-          facet_wrap(~ d.Cluster)
-
-embaymentBCGs
-
-## Save the plot
-ggsave(file="draft_figs/draft_embaymentBCGs.png", embaymentBCGs)
-
-```
 
 ## Summary and Questions to Consider
 What we've done so far is explore the stressors and habitat metrics within the 
@@ -478,34 +457,28 @@ bounds of MassBays as a whole. In doing so, we've shown that there are real
 differences among clusters that could be considered when assembling BCGs for 
 each embayment.  
 
-In addition, these BCGs only consider the present range of stressor and 
-habitat values captured in the EDA 2.0. A more complete BCG (or BCGs) may want to
-consider historical conditions (whether that be recent historical, 
-pre-industrial, etc.)
-
-The Northeastern assessment also identified which stressors are most predictive of 
-habitat condition. Shoreline hardening and septic system use were 
-able to predict percent saltmarsh; population density and shoreline hardening 
-could predict saltmarsh acres per km shoreline. One option is to use only those 
-stressors as inputs to a GSA for future draft BCGs. Another option could be to 
-use the highest 3 stressors in each embayment cluster to develop custom GSAs for 
-each cluster.  
+It's important to note that these BCGs only consider the present range of 
+stressor and habitat values captured in the EDA 2.0. Revised BCGs for each
+embayment cluster could consider historical conditions (whether that be recent historical, 
+pre-industrial, etc.), and additional habitat metrics and/or stressor metrics.  
 
 ### Questions to consider  
 
-1. How can additional stressor and/or habitat metrics be included 
-(e.g., water quality, contaminants)?  
+1. How can additional stressor and/or habitat metrics be included in the BCGs
+(e.g., water quality, contaminants)? Any EDA 2.0 dataset could be plotted on an 
+embayment cluster's BCG plot.  
 
-2. Should restoration/conservation targets be based on present range of data in 
-each cluster or should they be informed by additional (e.g., historical) data?  
+2. How should the GSA be revised?  
+..* Should all nine stressors be included and weighted equally?  
+..* Develop cluster-specific GSAs by using/weighting only those stressors most 
+relevant to the cluster?  
+..* Use/weight only those stressors with quantitative relationships to the 
+resource variables as described by the Northeastern regression trees?  
+..* How should/can historical conditions be included?  
 
-3. How can breaks between condition levels be defined? Is it possible to use the 
-results of the Northeastern decision trees for this?  
+3. How can breaks between condition levels be defined? How should "Level 1" be 
+defined and by whom?  
 
-4. Are "custom-BCGs" for each embayment desired?
-
-
-
-
-
-
+4. Should restoration/conservation targets be based on present range of data in 
+each cluster (e.g., cluster mean or max, as suggested in Northeastern report) or 
+can they also be informed by additional (e.g., historical) data?
