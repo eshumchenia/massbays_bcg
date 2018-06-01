@@ -38,11 +38,7 @@ There are 4 clusters of embayments in MassBays, defined by the Northeastern
 assessment. Below they are described by which stressor and habitat metrics were 
 highest in each.  
 
-<div style="float: left; padding: 10px">
-
-<img src="data/clusters_map.png", width="45%"> 
-
-</div>
+<img src="data/clusters_map.png"; width="35%">
 
 **Cluster 1**  
 - highest saltmarsh extent  
@@ -152,6 +148,9 @@ stressors. We can look at box plots showing the range of values for each
 stressor in each embayment cluster 1 - 4. 
 
 ```{r stressor_box, echo = FALSE, message = FALSE}
+
+## define the colors for each cluster as used in the Northeastern report
+colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
 
 ## Generate box plots of the stressors in each embayment cluster
 
@@ -297,6 +296,9 @@ Now we can also look at the amount of each habitat in each embayment cluster 1 -
 
 ```{r resources_box, echo = FALSE, message = FALSE}
 
+## define the colors for each cluster as used in the Northeastern report
+colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
+
 ## Generate box plots of the resources in each embayment cluster
 
 bA <- ggplot(d, aes(x=Cluster, y=percent.sm, fill=Cluster)) + 
@@ -353,6 +355,9 @@ for each embayment in MassBays. Here are the values for a GSA in each cluster:
 
 ```{r gsa, echo = FALSE, message = FALSE}
 
+## define the colors for each cluster as used in the Northeastern report
+colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
+
 ## Rescale each stressor from 0 to 1
 rescale_d <- d %>%
     mutate_if(is.numeric, rescale)
@@ -391,6 +396,9 @@ despite high levels of exposure to stressors (the GSA is never less than about
 2.5), Cluster 4 shows relatively high values for percent saltmarsh habitat.  
 
 ```{r embayments, echo = FALSE, message = FALSE}
+
+## define the colors for each cluster as used in the Northeastern report
+colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
 
 ## Make a dataframe with the GSA and habitat metrics only
 massbaysBCG_data <- data.frame(d$Embayment, d$Cluster, rescale_d$GSA, 
@@ -434,6 +442,9 @@ not have BCG levels, but these could be developed.
 We can see that Saltmarsh extent has the most linear relationship with the GSA.
 
 ```{r habitats, echo = FALSE, message = FALSE}
+
+## define the colors for each cluster as used in the Northeastern report
+colors <- palette(c("black", "aquamarine3", "darkgoldenrod1", "blue"))
 
 ## Make a "BCG-like" plot for each habitat individually
 habitatBCGs <- ggplot(massbaysBCG_melt, aes(rescale_d.GSA, value, color = d.Cluster, shape = 
